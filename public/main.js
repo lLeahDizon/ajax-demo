@@ -1,5 +1,18 @@
 console.log("我是main.js2");
 
+getHTML.onclick = () => {
+  const request = new XMLHttpRequest();
+  request.open("GET", "/3.html");
+  request.onload = () => {
+    console.log(request.response);
+    const div = document.createElement("div");
+    div.innerHTML = request.response;
+    document.body.appendChild(div);
+  };
+  request.onerror = () => {};
+  request.send();
+};
+
 getJS.onclick = () => {
   const request = new XMLHttpRequest();
   request.open("GET", "/2.js");
