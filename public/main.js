@@ -1,5 +1,38 @@
 console.log("我是main.js2");
 
+let n = 1;
+
+getPage.onclick = () => {
+  const request = new XMLHttpRequest();
+  request.open("GET", `/page${(n += 1)}`);
+  request.onreadystatechange = () => {
+    console.log(request);
+    if (request.readyState === 4 && request.status === 200) {
+      const array = JSON.parse(request.response);
+      array.forEach((item) => {
+        const li = document.createElement("li");
+        li.textContent = item.id;
+        xxx.appendChild(li);
+      });
+    }
+  };
+  request.send();
+};
+
+getJSON.onclick = () => {
+  const request = new XMLHttpRequest();
+  request.open("GET", "/5.json");
+  request.onreadystatechange = () => {
+    if (request.readyState === 4 && request.status === 200) {
+      const object = JSON.parse(request.response);
+      myName.textContent = object.name;
+      console.log(typeof request.response);
+      console.log(typeof object);
+    }
+  };
+  request.send();
+};
+
 getXML.onclick = () => {
   const request = new XMLHttpRequest();
   request.open("GET", "/4.xml");
@@ -16,34 +49,29 @@ getXML.onclick = () => {
 getHTML.onclick = () => {
   const request = new XMLHttpRequest();
   request.open("GET", "/3.html");
-  request.onload = () => {
-    console.log(request.response);
-    // 创建div标签
-    const div = document.createElement("div");
-    // 填写div内容
-    div.innerHTML = request.response;
-    // 插到身体里面
-    document.body.appendChild(div);
+  request.onreadystatechange = () => {
+    if (request.readyState === 4 && request.status === 200) {
+      // 创建div标签
+      const div = document.createElement("div");
+      // 填写div内容
+      div.innerHTML = request.response;
+      // 插到身体里面
+      document.body.appendChild(div);
+    }
   };
-  request.onerror = () => {};
   request.send();
 };
 
 getJS.onclick = () => {
   const request = new XMLHttpRequest();
   request.open("GET", "/2.js");
-  request.onload = () => {
-    console.log(request.response);
-
+  request.onreadystatechange = () => {
     // 创建script标签
     const script = document.createElement("script");
     // 填写script内容
     script.innerHTML = request.response;
     // 插到身体里面
     document.body.appendChild(script);
-  };
-  request.onerror = () => {
-    console.log("失败了");
   };
   request.send();
 };
